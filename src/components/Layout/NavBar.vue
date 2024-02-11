@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="shadow-slate-400 shadow-lg inset-x-0 top-0 z-50 md:border-0 md:bg-white dark:bg-gray-800 dark:border-gray-700"
+    class="shadow-slate-200 dark:shadow-gray-700 z-50 shadow-lg inset-x-0 top-0 md:border-0 md:bg-white dark:bg-gray-800 dark:border-gray-700"
   >
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <RouterLink to="/notes" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -72,8 +72,9 @@
         <!-- Dropdown -->
         <div class="relative">
           <div
+            ref="dropdownMenu"
             v-if="state.isDropdownVisible"
-            class="absolute shadow-slate-400 shadow-lg w-32 md:56 z-50 right-12 top-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg dark:bg-gray-700"
+            class="absolute shadow-slate-400 shadow-lg w-32 md:56 z-50 right-14 top-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg dark:bg-gray-700"
           >
             <ul class="py-2 font-medium" role="none">
               <li>
@@ -242,14 +243,23 @@
               >Register</RouterLink
             >
           </li>
+          <li @click="state.isHambugerMenuVisible = false">
+            <RouterLink
+              to="/admin"
+              active-class="dark:bg-gray-700 bg-stone-200"
+              class="block py-2 px-3 text-stone-700 hover:bg-stone-200 dark:text-white rounded hover:dark:bg-gray-700"
+              >Admin</RouterLink
+            >
+          </li>
         </ul>
       </div>
 
       <!-- Hamburger menu options -->
       <div
+        id="navbar-language"
+        ref="dropdownMenu"
         v-if="state.isHambugerMenuVisible"
         class="justify-between w-full md:hidden md:w-auto md:order-1"
-        id="navbar-language"
       >
         <ul
           class="flex flex-col items-center font-medium gap-2 p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:border-gray-700 dark:bg-gray-800"
@@ -277,6 +287,14 @@
               active-class="dark:bg-gray-700 bg-stone-200"
               class="block py-2 px-3 text-stone-700 hover:bg-stone-200 dark:text-white rounded hover:dark:bg-gray-700"
               >Register</RouterLink
+            >
+          </li>
+          <li @click="state.isHambugerMenuVisible = false">
+            <RouterLink
+              to="/admin"
+              active-class="dark:bg-gray-700 bg-stone-200"
+              class="block py-2 px-3 text-stone-700 hover:bg-stone-200 dark:text-white rounded hover:dark:bg-gray-700"
+              >Admin</RouterLink
             >
           </li>
         </ul>
@@ -335,5 +353,6 @@ const onSelectLanguage = (languageOption: string) => {
 
 onClickOutside(dropdownMenu, () => {
   state.isDropdownVisible = false
+  state.isHambugerMenuVisible = false
 })
 </script>
