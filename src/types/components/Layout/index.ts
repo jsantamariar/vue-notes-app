@@ -7,11 +7,4 @@ enum MenuOptions {
   SignOut = 'signOut'
 }
 
-enum LanguageOptions {
-  English = 'en',
-  Deutch = 'de',
-  Italian = 'it',
-  Chinese = 'zh'
-}
-
-export { MenuOptions, LanguageOptions }
+export { MenuOptions }

@@ -1,42 +1,48 @@
 import { reactive, ref } from 'vue'
 import { onClickOutside, useDark, useToggle } from '@vueuse/core'
-import { LanguageOptions } from '@/types'
+import { LanguageCode, LanguageFlag, LanguageName } from '@/types'
 
 const useNavbar = () => {
   const isDark = useDark()
   const toggleDarkMode = useToggle(isDark)
 
-  const languageDropdown = ref()
+  const languageDropdownRef = ref()
   const state = reactive({
     isDropdownVisible: false,
     isHambugerMenuVisible: false,
     countryName: 'English (US)',
-    flag: 'UsaFlag'
+    flag: 'UsaFlag',
+    code: 'en'
   })
 
-  const onSelectLanguage = (languageOption: string) => {
+  const onSelectLanguage = (option: string) => {
     state.isDropdownVisible = false
 
-    switch (languageOption) {
-      case LanguageOptions.English:
-        state.countryName = 'English (US)'
-        state.flag = 'UsaFlag'
+    switch (option) {
+      case LanguageCode.English:
+        state.countryName = LanguageName.English
+        state.flag = LanguageFlag.English
+        state.code = LanguageCode.English
         break
-      case LanguageOptions.Deutch:
-        state.countryName = 'Deutsch'
-        state.flag = 'GermanyFlag'
+      case LanguageCode.Spanish:
+        state.countryName = LanguageName.Spanish
+        state.flag = LanguageFlag.Spanish
+        state.code = LanguageCode.English
         break
-      case LanguageOptions.Italian:
-        state.countryName = 'Italiano'
-        state.flag = 'ItalyFlag'
+      case LanguageCode.Italian:
+        state.countryName = LanguageName.Italian
+        state.flag = LanguageFlag.Italian
+        state.code = LanguageCode.Italian
         break
-      case LanguageOptions.Chinese:
-        state.countryName = '中文 (繁體)'
-        state.flag = 'ChinaFlag'
+      case LanguageCode.German:
+        state.countryName = LanguageName.German
+        state.flag = LanguageFlag.German
+        state.code = LanguageCode.German
         break
       default:
-        state.countryName = 'English (US)'
-        state.flag = 'UsaFlag'
+        state.countryName = LanguageName.English
+        state.flag = LanguageFlag.English
+        state.code = LanguageCode.English
     }
   }
 
@@ -50,7 +56,7 @@ const useNavbar = () => {
     toggleDarkMode,
     onSelectLanguage,
     state,
-    languageDropdown,
+    languageDropdownRef,
     isDark
   }
 }
