@@ -5,7 +5,7 @@
       @click.prevent="$emit('onThemeToggle')"
       type="button"
       :class="{ 'bg-blue-700': isDark }"
-      class="text-gray-500 dark:text-gray-400 focus:outline-none rounded-lg text-sm p-2.5 hover:ring-4 hover:ring-gray-200 dark:hover:ring-gray-700"
+      class="text-gray-500 mt-0 dark:text-gray-400 focus:outline-none rounded-lg text-sm p-2.5 hover:ring-4 hover:ring-gray-200 dark:hover:ring-gray-700"
     >
       <svg
         width="25px"
@@ -31,11 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import SvgIcon from './SvgIcon.vue'
+import { useDark } from '@vueuse/core'
 
-const { isDark, flag, countryName } = defineProps({
-  countryName: String,
-  isDark: Boolean,
-  flag: String
-})
+const isDark = useDark()
 </script>
