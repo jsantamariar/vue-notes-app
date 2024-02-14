@@ -8,18 +8,27 @@
       </h5>
     </a>
     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400" v-html="data.description"></p>
-    <a
-      @click="$router.push('/notes/' + data.id)"
-      class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    >
-      Read more
-      <SvgIcon name="ArrowRight" width="15px" height="15px" />
-    </a>
+    <div class="gap-2 flex justify-center">
+      <button
+        @click="$router.push('/notes/' + data.id)"
+        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Read more
+        <SvgIcon name="ArrowRight" width="15px" height="15px" />
+      </button>
+      <button class="bg-stone-300 rounded-lg text-white p-2" @click="handleEditNote">Edit</button>
+      <button class="bg-red-300 rounded-lg text-white p-2" @click="handleDeleteNote">Delete</button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import SvgIcon from './SvgIcon.vue'
+import { useNotesStore } from '@/store/notes'
+
+const router = useRouter()
+const { deleteNote } = useNotesStore()
 
 const { data } = defineProps<{
   data: {
@@ -28,4 +37,12 @@ const { data } = defineProps<{
     description: string
   }
 }>()
+
+const handleEditNote = () => {
+  router.push('/editNote/' + data.id)
+}
+
+const handleDeleteNote = () => {
+  deleteNote(data.id)
+}
 </script>

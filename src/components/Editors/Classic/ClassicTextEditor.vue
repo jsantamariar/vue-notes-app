@@ -1,8 +1,10 @@
 <template>
   <div class="my-5">
-    <label for="post_title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-      >Post Title</label
-    >
+    <label for="post_title" class="block mb-2 text-xlfont-medium text-gray-900 dark:text-white">{{
+      $route.name === 'EditNote' ? 'Edit Note' : 'Post Title'
+    }}</label>
+    <!-- Editor Title -->
+    <slot name="title" />
     <input
       type="text"
       id="post_title"
@@ -12,6 +14,8 @@
       required
     />
   </div>
+  <!-- Editor Description -->
+  <!-- <slot name="description" /> -->
   <ckeditor
     v-model="editorData"
     tag-name="textarea"
@@ -20,25 +24,23 @@
     @ready="onReady"
     @input="onInput"
   />
+  <!-- Editor footer -->
   <div class="flex justify-end gap-2">
     <button
-      class="bg-slate-800 text-white font-bold rounded text-sm p-2 hover:bg-slate-700"
+      :disabled="!postTitle || !editorData"
+      :class="{ 'bg-stone-300 hover:bg-stone-300 cursor-not-allowed': !postTitle || !editorData }"
+      class="bg-slate-800 text-white font-bold rounded-xl text-sm p-2 hover:opacity-80"
       @click="handleAddNote"
     >
       Add Note
     </button>
     <button
-      class="bg-stone-400 text-white font-bold rounded text-sm p-2 border-slate-500 border-1 hover:bg-stone-300"
-      @click="handleAddNote"
+      class="bg-stone-400 text-white font-bold rounded-xl text-sm p-2 border-slate-500 border-1 hover:opacity-80"
+      @click="onCancel"
     >
       Cancel
     </button>
   </div>
-
-  {{ editorData }}
-
-  <!-- <div class="wrapper" v-html="editorData" /> -->
-  <!-- <div class="wrapper" editorData>{{ editorData }}</div> -->
 </template>
 
 <script setup lang="ts">
@@ -47,11 +49,32 @@ import editorConfig from './config'
 import { useClassicEditor } from './useClassicEditor'
 import { useNotesStore } from '@/store/notes'
 import { v4 as uuidv4 } from 'uuid'
+import { useRoute, useRouter } from 'vue-router'
 
-const { addNewNote } = useNotesStore()
+const router = useRouter()
+const route = useRoute()
+const { addNewNote, getNoteContentById } = useNotesStore()
 const { editor, editorData, onReady, onInput } = useClassicEditor()
 
-const postTitle = ref('')
+const postData = getNoteContentById(route.params.id as string)
+
+const props = defineProps({
+  title: String,
+  description: String
+})
+
+const emit = defineEmits(['update:title', 'update:description'])
+
+const updateTitle = (title: string) => {
+  emit('update:title', title)
+}
+
+// Similar para lastName
+const updateDescription = (description: string) => {
+  emit('update:description', description)
+}
+
+const postTitle = ref(postData?.title || '')
 
 const handleAddNote = () => {
   const newNote = {
@@ -59,8 +82,14 @@ const handleAddNote = () => {
     title: postTitle.value,
     description: editorData.value
   }
-  console.log({ newNote })
+
   addNewNote(newNote)
+  router.push({ name: 'Notes' })
+}
+
+const onCancel = () => {
+  editorData.value = ''
+  postTitle.value = ''
 }
 </script>
 

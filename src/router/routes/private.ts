@@ -10,6 +10,11 @@ const privateRoutes = [
     component: () => import('@/views/NoteView.vue')
   },
   {
+    path: '/editNote/:id',
+    name: 'EditNote',
+    component: () => import('@/views/EditNoteView.vue')
+  },
+  {
     path: '/stats',
     name: 'Stats',
     component: () => import('@/views/StatsView.vue')

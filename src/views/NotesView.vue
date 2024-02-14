@@ -4,6 +4,7 @@
     <div class="inline-flex mx-3 m-5" v-for="note in notes" :key="note.id">
       <CardNotes :data="note" />
     </div>
+    <div v-if="notes.length < 1">There are not notes yet</div>
   </div>
 </template>
 
