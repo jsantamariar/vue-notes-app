@@ -1,4 +1,4 @@
-import { MenuOptions } from './components/Layout'
+import { MenuOptions, type Note } from './components/Layout'
 import { LanguageCode, LanguageName, LanguageFlag } from './contants'
 
-export { MenuOptions, LanguageCode, LanguageName, LanguageFlag }
+export { type Note, MenuOptions, LanguageCode, LanguageName, LanguageFlag }

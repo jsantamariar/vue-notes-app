@@ -1,4 +1,9 @@
 //  Interfaces
+interface Note {
+  id: string
+  title: string
+  description: string
+}
 
 //  Enums
 enum MenuOptions {
@@ -7,4 +12,4 @@ enum MenuOptions {
   SignOut = 'signOut'
 }
 
-export { MenuOptions }
+export { type Note, MenuOptions }
