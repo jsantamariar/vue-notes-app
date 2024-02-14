@@ -1,0 +1,6 @@
+{
+  "message": {
+    "hello": "ciao mondo",
+    "goodbye": "arrivederci {user}"
+  }
+}
