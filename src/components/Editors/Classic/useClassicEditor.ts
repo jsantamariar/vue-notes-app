@@ -1,19 +1,22 @@
 import { ref } from 'vue'
+import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic'
+import type { EventInfo } from '@ckeditor/ckeditor5-utils'
 
 export const useClassicEditor = () => {
+  /* states */
   const editorData = ref('')
 
-  const onReady = (editorInstance: any) => {
-    console.log('Editor is ready to use!', editorInstance)
+  /* methods */
+  function onReady(editor: ClassicEditor) {
+    console.log('ClassicEditor is ready')
   }
 
-  const onChange = (event: any, editorInstance: any) => {
-    const data = editorInstance.getData()
-    console.log({ event, editorInstance, data })
-  }
+  const onInput = (data: any, event: EventInfo, editor: ClassicEditor) => {}
+
   return {
+    editor: ClassicEditor,
     editorData,
     onReady,
-    onChange
+    onInput
   }
 }
