@@ -1,10 +1,9 @@
 <template>
   <div class="my-5">
-    <label for="post_title" class="block mb-2 text-xlfont-medium text-gray-900 dark:text-white">{{
-      $route.name === 'EditNote' ? 'Edit Note' : 'Post Title'
+    <label for="post_title" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">{{
+      $route.name === 'EditNote' ? 'Edit Title' : 'Post Title'
     }}</label>
     <!-- Editor Title -->
-    <slot name="title" />
     <input
       type="text"
       id="post_title"
@@ -15,82 +14,57 @@
     />
   </div>
   <!-- Editor Description -->
-  <!-- <slot name="description" /> -->
+  <label class="text-xl font-medium mb-2 block text-gray-900 dark:text-white"
+    >Edit description</label
+  >
   <ckeditor
-    v-model="editorData"
+    v-model="postDescription"
     tag-name="textarea"
     :editor="editor"
     :config="editorConfig"
     @ready="onReady"
     @input="onInput"
   />
-  <!-- Editor footer -->
-  <div class="flex justify-end gap-2">
+  <!-- Editor Actions -->
+  <div class="flex justify-end gap-2 mt-2">
     <button
-      :disabled="!postTitle || !editorData"
-      :class="{ 'bg-stone-300 hover:bg-stone-300 cursor-not-allowed': !postTitle || !editorData }"
-      class="bg-slate-800 text-white font-bold rounded-xl text-sm p-2 hover:opacity-80"
-      @click="handleAddNote"
-    >
-      Add Note
-    </button>
-    <button
+      :disabled="!postTitle || !postDescription"
+      :class="{
+        'bg-stone-300 hover:opacity-100 cursor-not-allowed': !postTitle || !postDescription
+      }"
       class="bg-stone-400 text-white font-bold rounded-xl text-sm p-2 border-slate-500 border-1 hover:opacity-80"
       @click="onCancel"
     >
       Cancel
     </button>
+    <button
+      :disabled="!postTitle || !postDescription"
+      :class="{
+        'bg-stone-300 hover:bg-stone-300  hover:opacity-100 cursor-not-allowed':
+          !postTitle || !postDescription
+      }"
+      class="bg-slate-800 text-white font-bold rounded-xl text-sm p-2 hover:opacity-80"
+      @click="$route.name === 'EditNote' ? handleUpdateNote() : handleAddNote()"
+    >
+      Add Note
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import editorConfig from './config'
 import { useClassicEditor } from './useClassicEditor'
-import { useNotesStore } from '@/store/notes'
-import { v4 as uuidv4 } from 'uuid'
-import { useRoute, useRouter } from 'vue-router'
 
-const router = useRouter()
-const route = useRoute()
-const { addNewNote, getNoteContentById } = useNotesStore()
-const { editor, editorData, onReady, onInput } = useClassicEditor()
-
-const postData = getNoteContentById(route.params.id as string)
-
-const props = defineProps({
-  title: String,
-  description: String
-})
-
-const emit = defineEmits(['update:title', 'update:description'])
-
-const updateTitle = (title: string) => {
-  emit('update:title', title)
-}
-
-// Similar para lastName
-const updateDescription = (description: string) => {
-  emit('update:description', description)
-}
-
-const postTitle = ref(postData?.title || '')
-
-const handleAddNote = () => {
-  const newNote = {
-    id: uuidv4(),
-    title: postTitle.value,
-    description: editorData.value
-  }
-
-  addNewNote(newNote)
-  router.push({ name: 'Notes' })
-}
-
-const onCancel = () => {
-  editorData.value = ''
-  postTitle.value = ''
-}
+const {
+  editor,
+  postTitle,
+  postDescription,
+  onReady,
+  onInput,
+  onCancel,
+  handleAddNote,
+  handleUpdateNote
+} = useClassicEditor()
 </script>
 
 <style>

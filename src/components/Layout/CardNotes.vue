@@ -1,48 +1,56 @@
 <template>
   <div
-    class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-2xl shadow-slate-700 dark:bg-gray-800 dark:border-gray-700"
+    class="relative max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-2xl shadow-slate-700 dark:bg-gray-800 dark:border-gray-700"
   >
-    <a @click="$router.push('/notes/' + data.id)" href="#">
-      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        {{ data.title }}
-      </h5>
-    </a>
-    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400" v-html="data.description"></p>
-    <div class="gap-2 flex justify-center">
-      <button
-        @click="$router.push('/notes/' + data.id)"
-        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      >
-        Read more
-        <SvgIcon name="ArrowRight" width="15px" height="15px" />
-      </button>
-      <button class="bg-stone-300 rounded-lg text-white p-2" @click="handleEditNote">Edit</button>
-      <button class="bg-red-300 rounded-lg text-white p-2" @click="handleDeleteNote">Delete</button>
+    <div class="flex">
+      <!-- Card Title -->
+      <div>
+        <RouterLink :to="'/notes/' + note.id">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {{ note.title }}
+          </h5>
+        </RouterLink>
+      </div>
+      <!-- Card Menu -->
+      <CardMenu :note="note" v-model="options.isCardMenuOpen" @onDelete="handleDeleteNote" />
     </div>
+    <p
+      class="mb-3 font-normal text-gray-700 dark:text-gray-400"
+      v-html="getShortText(note.description)"
+    ></p>
   </div>
+  <!-- Delete Modal -->
+  <ModalDelete
+    v-if="options.isModalVisible"
+    v-model="options.isModalVisible"
+    @onConfirm="handleDeleteNote"
+  />
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import SvgIcon from './SvgIcon.vue'
+import { RouterLink } from 'vue-router'
 import { useNotesStore } from '@/store/notes'
+import { getShortText } from '@/utils/main'
+import ModalDelete from '@/components/Layout/ModalDelete.vue'
+import { reactive } from 'vue'
+import CardMenu from './CardMenu.vue'
 
-const router = useRouter()
 const { deleteNote } = useNotesStore()
 
-const { data } = defineProps<{
-  data: {
+const { note } = defineProps<{
+  note: {
     id: string
     title: string
     description: string
   }
 }>()
 
-const handleEditNote = () => {
-  router.push('/editNote/' + data.id)
-}
+const options = reactive({
+  isCardMenuOpen: false,
+  isModalVisible: false
+})
 
 const handleDeleteNote = () => {
-  deleteNote(data.id)
+  deleteNote(note.id)
 }
 </script>

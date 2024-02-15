@@ -1,22 +1,12 @@
-import { defineStore } from 'pinia'
+import { defineStore, acceptHMRUpdate } from 'pinia'
 import type { Note } from '@/types'
+import { db } from '@/firebase'
+import { collection, getDocs, onSnapshot } from 'firebase/firestore'
 
 export const useNotesStore = defineStore('notes', {
   state: () => ({
-    notes: [
-      {
-        id: '185',
-        title: 'Meet how beautiful expect early find moment.',
-        description:
-          'Answer hit idea state if share however process. Research high left wonder piece west event mind. Protect cover program data edge.\nDiscussion expert different office international energy.'
-      },
-      {
-        id: '769',
-        title: 'Listen industry life relate low yeah.',
-        description:
-          'Have see foreign true. Note lead special tonight seat.\nCover whatever product method push just. Different address yeah these country join number. Look though nearly score rich look.'
-      }
-    ] as Note[]
+    isLoading: true,
+    notes: [] as Note[]
   }),
   getters: {
     getNoteContentById: (state) => {
@@ -26,11 +16,45 @@ export const useNotesStore = defineStore('notes', {
     }
   },
   actions: {
-    addNewNote(note: Note) {
-      this.notes.unshift(note)
+    async getAllNotes() {
+      //   this.isLoading = true
+      //   const unsubscribe = onSnapshot(collection(db, 'notes'), (querySnapshot) => {
+      //     const notes: Note[] = []
+      //     querySnapshot.forEach((doc) => {
+      //       notes.push({
+      //         id: doc.id,
+      //         title: doc.data().title,
+      //         description: doc.data().description
+      //       } as Note)
+      //     })
+      //     this.notes = notes
+      //     this.isLoading = false
+      //   })
+      //   return unsubscribe
+
+      const querySnapshot = await getDocs(collection(db, 'notes'))
+      querySnapshot.forEach((doc) => {
+        const note = {
+          id: doc.id,
+          title: doc.data().title,
+          description: doc.data().description
+        } as Note
+        this.notes.push(note)
+      })
+    },
+    addNewNote(newNote: Note) {
+      this.notes.unshift(newNote)
+    },
+    updateNote(id: string, updatedNote: Note) {
+      const noteIndex = this.notes.findIndex((note) => note.id === id)
+      this.notes[noteIndex] = updatedNote
     },
     deleteNote(idToDelete: string) {
       this.notes = this.notes.filter((note) => note.id !== idToDelete)
     }
   }
 })
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useNotesStore, import.meta.hot))
+}

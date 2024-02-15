@@ -51,4 +51,11 @@ const getLanguage = (locale: LanguageCode) => {
   }
 }
 
-export { getLanguage }
+const getShortText = (text: string, maxLength?: number) => {
+  if (text.length > (maxLength || 100)) {
+    return text.slice(0, maxLength || 100) + '...'
+  }
+  return text
+}
+
+export { getLanguage, getShortText }

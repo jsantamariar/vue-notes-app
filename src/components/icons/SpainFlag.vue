@@ -2,8 +2,8 @@
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    width="800px"
-    height="800px"
+    :height="height"
+    :width="width"
     viewBox="0 0 36 36"
     aria-hidden="true"
     role="img"
@@ -24,3 +24,10 @@
     <path fill="#66757F" d="M6 22h3v1H6zm9 0h3v1h-3zm-8-7h1v1H7zm9 0h1v1h-1z" />
   </svg>
 </template>
+
+<script setup lang="ts">
+const { width, height } = defineProps<{
+  width: number | string
+  height: number | string
+}>()
+</script>
