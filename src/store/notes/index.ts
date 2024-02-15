@@ -1,12 +1,12 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import type { Note } from '@/types'
 import { db } from '@/firebase'
-import { collection, getDocs, onSnapshot } from 'firebase/firestore'
+import { collection, onSnapshot } from 'firebase/firestore'
 
 export const useNotesStore = defineStore('notes', {
   state: () => ({
-    isLoading: true,
-    notes: [] as Note[]
+    notes: [] as Note[],
+    isLoading: false
   }),
   getters: {
     getNoteContentById: (state) => {
@@ -17,32 +17,21 @@ export const useNotesStore = defineStore('notes', {
   },
   actions: {
     async getAllNotes() {
-      //   this.isLoading = true
-      //   const unsubscribe = onSnapshot(collection(db, 'notes'), (querySnapshot) => {
-      //     const notes: Note[] = []
-      //     querySnapshot.forEach((doc) => {
-      //       notes.push({
-      //         id: doc.id,
-      //         title: doc.data().title,
-      //         description: doc.data().description
-      //       } as Note)
-      //     })
-      //     this.notes = notes
-      //     this.isLoading = false
-      //   })
-      //   return unsubscribe
-
       if (this.notes.length > 0) return
-
-      const querySnapshot = await getDocs(collection(db, 'notes'))
-      querySnapshot.forEach((doc) => {
-        const note = {
-          id: doc.id,
-          title: doc.data().title,
-          description: doc.data().description
-        } as Note
-        this.notes.push(note)
+      this.isLoading = true
+      const unsubscribe = onSnapshot(collection(db, 'notes'), (querySnapshot) => {
+        const notes: Note[] = []
+        querySnapshot.forEach((doc) => {
+          notes.push({
+            id: doc.id,
+            title: doc.data().title,
+            description: doc.data().description
+          } as Note)
+        })
+        this.notes = notes
+        this.isLoading = false
       })
+      return unsubscribe
     },
     addNewNote(newNote: Note) {
       this.notes.unshift(newNote)

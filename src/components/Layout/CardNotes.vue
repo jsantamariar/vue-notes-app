@@ -2,18 +2,14 @@
   <div
     class="relative max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-2xl shadow-slate-700 dark:bg-gray-800 dark:border-gray-700"
   >
-    <div class="flex">
-      <!-- Card Title -->
-      <div>
-        <RouterLink :to="'/notes/' + note.id">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {{ note.title }}
-          </h5>
-        </RouterLink>
-      </div>
-      <!-- Card Menu -->
-      <CardMenu :note="note" v-model="options.isCardMenuOpen" @onDelete="handleDeleteNote" />
-    </div>
+    <!-- Card Menu -->
+    <CardMenu :note="note" v-model="options.isCardMenuOpen" @onDelete="handleDeleteNote" />
+    <!-- Card Title -->
+    <RouterLink :to="'/notes/' + note.id">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {{ note.title }}
+      </h5>
+    </RouterLink>
     <p
       class="mb-3 font-normal text-gray-700 dark:text-gray-400"
       v-html="getShortText(note.description)"
