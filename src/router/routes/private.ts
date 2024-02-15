@@ -7,7 +7,7 @@ const privateRoutes = [
   {
     path: '/notes/:id',
     name: 'Note',
-    component: () => import('@/views/NoteView.vue')
+    component: () => import('@/views/NoteDetailsView.vue')
   },
   {
     path: '/editNote/:id',
