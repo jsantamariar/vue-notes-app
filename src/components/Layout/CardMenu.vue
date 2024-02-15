@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute right-0 -top-3">
+  <div class="absolute right-0 top-2">
     <button
       id="dropdownMenuIconButton"
       data-dropdown-toggle="dropdownDots"
