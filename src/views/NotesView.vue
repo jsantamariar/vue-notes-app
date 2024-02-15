@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted } from 'vue'
 import { useNotesStore } from '@/store/notes'
 import { storeToRefs } from 'pinia'
 import CardNotes from '@/components/Layout/CardNotes.vue'
@@ -21,10 +21,6 @@ const { notes, isLoading } = storeToRefs(store)
 
 onMounted(() => {
   getAllNotes()
-})
-
-onUnmounted(() => {
-  store.$reset()
 })
 </script>
 

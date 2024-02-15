@@ -32,6 +32,8 @@ export const useNotesStore = defineStore('notes', {
       //   })
       //   return unsubscribe
 
+      if (this.notes.length > 0) return
+
       const querySnapshot = await getDocs(collection(db, 'notes'))
       querySnapshot.forEach((doc) => {
         const note = {
