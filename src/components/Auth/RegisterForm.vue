@@ -7,7 +7,7 @@
         <h1
           class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
         >
-          Sign in
+          Sign up
         </h1>
         <form class="space-y-4 md:space-y-6" action="#">
           <div>
@@ -17,10 +17,12 @@
             <input
               type="email"
               name="email"
-              id="email"
               autocomplete="email"
+              id="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="name@company.com"
+              placeholder="user@address.com"
+              v-model="credentials.email"
+              @input="(e: Event) => (credentials.email = (e.target as HTMLInputElement).value)"
             />
           </div>
           <div>
@@ -33,43 +35,27 @@
               type="password"
               name="password"
               id="password"
-              placeholder="••••••••"
               autocomplete="current-password"
+              placeholder="••••••••"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              v-model="credentials.password"
+              @input="(e: Event) => (credentials.password = (e.target as HTMLInputElement).value)"
             />
           </div>
-          <div class="flex items-center justify-between">
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input
-                  id="remember"
-                  aria-describedby="remember"
-                  type="checkbox"
-                  class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                />
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
-              </div>
-            </div>
-            <a
-              href="#"
-              class="text-sm font-medium hover:underline dark:text-primary-500 text-gray-500"
-              >Forgot password?</a
-            >
-          </div>
+
           <button
+            @click.prevent="onSubmit"
             type="submit"
-            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            class="w-full text-stone hover:ring-1 shadow-md shadow-stone-300 focus:ring-stone-300 bg-stone-200 hover:bg-stone-300 focus:ring-3 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           >
-            Sign in
+            Sign up
           </button>
           <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-            Don’t have an account yet?
+            Already have an account?
             <RouterLink
-              to="/register"
+              to="/login"
               class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-              >Sign up</RouterLink
+              >Sign in</RouterLink
             >
           </p>
         </form>
@@ -78,4 +64,23 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAuthStore } from '@/store/auth'
+import { reactive } from 'vue'
+
+const authStore = useAuthStore()
+
+const credentials = reactive({
+  email: '',
+  password: ''
+})
+
+const onSubmit = () => {
+  if (!credentials.email || !credentials.password) {
+    alert('Please add an email and password.')
+    return
+  }
+
+  authStore.register(credentials.email, credentials.password)
+}
+</script>

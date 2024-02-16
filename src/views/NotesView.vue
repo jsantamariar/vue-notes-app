@@ -5,9 +5,9 @@
       <CardNotes :note="note" />
     </div>
     <div class="inline-flex mx-3 m-5">
-      <LoadingSpinner v-if="store.isLoading" />
+      <LoadingSpinner v-if="store.isLoadingNotes" />
     </div>
-    <div v-if="notes.length < 1 && !store.isLoading">There are not notes yet</div>
+    <div v-if="notes.length < 1 && !store.isLoadingNotes">There are not notes yet</div>
   </div>
 </template>
 
