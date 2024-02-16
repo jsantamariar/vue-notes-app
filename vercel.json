@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/notes/:path*", "destination": "/index.html" },
+    { "source": "/editNote/:path*", "destination": "/index.html" },
+    { "source": "/stats", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/register", "destination": "/index.html" },
+    { "source": "/login", "destination": "/index.html" }
+  ]
+}
