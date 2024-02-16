@@ -41,7 +41,7 @@
             role="menuitem"
           >
             <div class="flex justify-center gap-2 m-0 p-0 items-center">
-              <img :src="`/src/assets/icons/${icon}.svg`" class="h-4 rounded-full w-4" />
+              <img :src="`./src/assets/icons/${icon}.svg`" class="h-4 rounded-full w-4" />
               <span class="dark:text-white text-stone-700"> {{ name }} </span>
             </div>
           </a>
