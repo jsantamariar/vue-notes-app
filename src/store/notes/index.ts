@@ -1,12 +1,14 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import type { Note } from '@/types'
 import { db } from '@/firebase'
-import { collection, onSnapshot } from 'firebase/firestore'
+import { collection, deleteDoc, doc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore'
+
+const notesCollectionRef = collection(db, 'notes')
 
 export const useNotesStore = defineStore('notes', {
   state: () => ({
     notes: [] as Note[],
-    isLoading: false
+    isLoadingNotes: false
   }),
   getters: {
     getNoteContentById: (state) => {
@@ -18,30 +20,37 @@ export const useNotesStore = defineStore('notes', {
   actions: {
     async getAllNotes() {
       if (this.notes.length > 0) return
-      this.isLoading = true
-      const unsubscribe = onSnapshot(collection(db, 'notes'), (querySnapshot) => {
+
+      this.isLoadingNotes = true
+      onSnapshot(notesCollectionRef, (querySnapshot) => {
         const notes: Note[] = []
         querySnapshot.forEach((doc) => {
           notes.push({
             id: doc.id,
+            createdBy: doc.data().createdBy,
+            created: doc.data().created,
             title: doc.data().title,
             description: doc.data().description
           } as Note)
         })
         this.notes = notes
-        this.isLoading = false
+        this.isLoadingNotes = false
       })
-      return unsubscribe
     },
-    addNewNote(newNote: Note) {
-      this.notes.unshift(newNote)
+    async addNewNote(newNote: Note) {
+      await setDoc(doc(notesCollectionRef, newNote.id), newNote)
     },
-    updateNote(id: string, updatedNote: Note) {
-      const noteIndex = this.notes.findIndex((note) => note.id === id)
-      this.notes[noteIndex] = updatedNote
+    async updateNote(noteId: string, updatedNote: Note) {
+      await updateDoc(doc(notesCollectionRef, noteId), {
+        id: updatedNote.id,
+        createdBy: updatedNote.createdBy,
+        created: updatedNote.created,
+        title: updatedNote.title,
+        description: updatedNote.description
+      })
     },
-    deleteNote(idToDelete: string) {
-      this.notes = this.notes.filter((note) => note.id !== idToDelete)
+    async deleteNote(idToDelete: string) {
+      await deleteDoc(doc(db, 'notes', idToDelete))
     }
   }
 })

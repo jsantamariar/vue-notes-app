@@ -36,7 +36,7 @@
           >Home
         </RouterLink>
       </li>
-      <li @click="emit('onCloseMenu')">
+      <li v-if="!authStore.isLogged" @click="emit('onCloseMenu')">
         <RouterLink
           to="/login"
           active-class="dark:bg-gray-700 bg-stone-200"
@@ -44,7 +44,7 @@
           >Login</RouterLink
         >
       </li>
-      <li @click="emit('onCloseMenu')">
+      <li v-if="!authStore.isLogged" @click="emit('onCloseMenu')">
         <RouterLink
           to="/register"
           active-class="dark:bg-gray-700 bg-stone-200"
@@ -52,7 +52,7 @@
           >Register</RouterLink
         >
       </li>
-      <li @click="emit('onCloseMenu')">
+      <li v-if="authStore.isLogged" @click="emit('onCloseMenu')">
         <RouterLink
           to="/admin"
           active-class="dark:bg-gray-700 bg-stone-200"
@@ -60,14 +60,24 @@
           >Admin</RouterLink
         >
       </li>
+      <li v-if="authStore.isLogged" @click="emit('onCloseMenu')">
+        <a
+          @click="authStore.logout"
+          active-class="dark:bg-gray-700 bg-stone-200"
+          class="block cursor-pointer py-2 px-3 text-stone-700 hover:bg-stone-200 dark:text-white rounded hover:dark:bg-gray-700"
+          >Logout</a
+        >
+      </li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@/store/auth'
 import { useDark } from '@vueuse/core'
 
 const isDark = useDark()
+const authStore = useAuthStore()
 
 const { isHambugerMenuVisible } = defineProps({
   isHambugerMenuVisible: Boolean

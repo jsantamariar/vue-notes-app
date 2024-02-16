@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center gap-2">
     <button
       id="theme-toggle"
-      @click.prevent="$emit('onThemeToggle')"
+      @click.prevent="emit('onThemeToggle')"
       type="button"
       :class="{ 'bg-blue-700': isDark }"
       class="text-gray-500 mt-0 dark:text-gray-400 focus:outline-none rounded-lg text-sm p-2.5 hover:ring-4 hover:ring-gray-200 dark:hover:ring-gray-700"
@@ -34,4 +34,6 @@
 import { useDark } from '@vueuse/core'
 
 const isDark = useDark()
+
+const emit = defineEmits(['onThemeToggle'])
 </script>

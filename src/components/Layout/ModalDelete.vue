@@ -16,12 +16,12 @@
           <span class="sr-only">Close modal</span>
         </button>
         <div class="p-4 md:p-5 text-center">
-          <SvgIcon name="WarningIcon" />
+          <SvgIcon name="WarningIcon" width="15px" height="15px" />
           <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
             Are you sure you want to delete this note?
           </h3>
           <button
-            @click="$emit('onConfirm')"
+            @click="emit('onConfirmDelete')"
             data-modal-hide="popup-modal"
             type="button"
             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
@@ -52,5 +52,5 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue', 'onConfirm'])
+const emit = defineEmits(['update:modelValue', 'onConfirmDelete'])
 </script>

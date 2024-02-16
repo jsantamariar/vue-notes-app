@@ -9,7 +9,7 @@
       id="post_title"
       class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
       placeholder="Enter post title"
-      v-model="postTitle"
+      v-model="noteTitle"
       required
     />
   </div>
@@ -18,7 +18,7 @@
     >Edit description</label
   >
   <ckeditor
-    v-model="postDescription"
+    v-model="noteDescription"
     tag-name="textarea"
     :editor="editor"
     :config="editorConfig"
@@ -28,9 +28,9 @@
   <!-- Editor Actions -->
   <div class="flex justify-end gap-2 mt-2">
     <button
-      :disabled="!postTitle || !postDescription"
+      :disabled="!noteTitle || !noteDescription"
       :class="{
-        'bg-stone-300 hover:opacity-100 cursor-not-allowed': !postTitle || !postDescription
+        'bg-stone-300 hover:opacity-100 cursor-not-allowed': !noteTitle || !noteDescription
       }"
       class="bg-stone-400 text-white font-bold rounded-xl text-sm p-2 border-slate-500 border-1 hover:opacity-80"
       @click="onCancel"
@@ -38,10 +38,10 @@
       Cancel
     </button>
     <button
-      :disabled="!postTitle || !postDescription"
+      :disabled="!noteTitle || !noteDescription"
       :class="{
         'bg-stone-300 hover:bg-stone-300  hover:opacity-100 cursor-not-allowed':
-          !postTitle || !postDescription
+          !noteTitle || !noteDescription
       }"
       class="bg-slate-800 text-white font-bold rounded-xl text-sm p-2 hover:opacity-80"
       @click="$route.name === 'EditNote' ? handleUpdateNote() : handleAddNote()"
@@ -52,13 +52,13 @@
 </template>
 
 <script setup lang="ts">
-import editorConfig from './config'
 import { useClassicEditor } from './useClassicEditor'
+import editorConfig from './config'
 
 const {
   editor,
-  postTitle,
-  postDescription,
+  noteTitle,
+  noteDescription,
   onReady,
   onInput,
   onCancel,

@@ -5,6 +5,14 @@
 
 <script setup lang="ts">
 import NavBar from '@/components/Layout/NavBar.vue'
+import { onMounted } from 'vue'
+import { useAuthStore } from './store/auth'
+
+const authStore = useAuthStore()
+
+onMounted(() => {
+  authStore.init()
+})
 </script>
 
 <style scoped>

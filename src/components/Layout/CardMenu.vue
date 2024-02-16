@@ -5,7 +5,7 @@
       data-dropdown-toggle="dropdownDots"
       class="inline-flex items-start py-1 text-sm font-medium text-center text-gray-900 bg-white rounded-lg dark:text-white dark:bg-gray-800"
       type="button"
-      @click="emit('update:modelValue', !modelValue)"
+      @click="emit('update:isCardMenuOpen', !isCardMenuOpen)"
     >
       <svg
         class="w-5 h-5"
@@ -24,8 +24,8 @@
   <!-- Dropdown menu -->
   <div
     id="dropdownDots"
-    v-if="modelValue"
-    class="z-10 absolute shadow-lg border border-stone-500 border-opacity-15 shadow-stone-500 right-2 top-7 bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700 dark:divide-gray-600"
+    v-if="isCardMenuOpen"
+    class="z-10 absolute shadow-lg border border-stone-500 border-opacity-15 shadow-stone-500 right-2 top-11 bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700 dark:divide-gray-600"
   >
     <ul
       class="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -40,7 +40,7 @@
       </li>
       <li>
         <a
-          @click="emit('onDelete')"
+          @click="handleDelete"
           class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
         >
           Delete
@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  modelValue: {
+  isCardMenuOpen: {
     type: Boolean,
     default: false
   },
@@ -61,5 +61,10 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue', 'onDelete'])
+const handleDelete = () => {
+  emit('update:isCardMenuOpen', false)
+  emit('onDelete')
+}
+
+const emit = defineEmits(['update:isCardMenuOpen', 'onDelete'])
 </script>

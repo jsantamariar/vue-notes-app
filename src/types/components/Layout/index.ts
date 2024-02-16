@@ -1,6 +1,8 @@
 //  Interfaces
 interface Note {
   id: string
+  createdBy: string
+  created: string
   title: string
   description: string
 }
