@@ -25,7 +25,7 @@ export const useAuthStore = defineStore('auth', {
         } else {
           this.user = null
           this.isLogged = false
-          router.push('/login')
+          router.push('/')
         }
       })
     },
