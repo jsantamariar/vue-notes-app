@@ -7,22 +7,22 @@
   >
     <img
       v-if="flag === LanguageFlag.English"
-      src="/src/assets/icons/usa-flag.svg"
+      src="/icons/usa-flag.svg"
       class="h-4 rounded-full w-4"
     />
     <img
       v-if="flag === LanguageFlag.Italian"
-      src="/src/assets/icons/italy-flag.svg"
+      src="/icons/italy-flag.svg"
       class="h-4 rounded-full w-4"
     />
     <img
       v-if="flag === LanguageFlag.German"
-      src="/src/assets/icons/germany-flag.svg"
+      src="/icons/germany-flag.svg"
       class="h-4 rounded-full w-4"
     />
     <img
       v-if="flag === LanguageFlag.Spanish"
-      src="/src/assets/icons/spain-flag.svg"
+      src="/icons/spain-flag.svg"
       class="h-4 rounded-full w-4"
     />
     {{ countryName }}

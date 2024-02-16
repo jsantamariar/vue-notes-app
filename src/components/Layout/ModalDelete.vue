@@ -12,12 +12,12 @@
           class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
           data-modal-hide="popup-modal"
         >
-          <img src="/src/assets/icons/close-icon.svg" class="h-3 w-3" />
+          <img src="/icons/close-icon.svg" class="h-3 w-3" />
           <span class="sr-only">Close modal</span>
         </button>
         <div class="p-4 md:p-5 text-center">
           <div class="flex justify-center mb-5">
-            <img src="/src/assets/icons/warning-icon.svg" class="h-7 w-7" />
+            <img src="/icons/warning-icon.svg" class="h-7 w-7" />
           </div>
           <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
             Are you sure you want to delete this note?
