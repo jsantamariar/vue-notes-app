@@ -11,7 +11,7 @@ const useNavbar = () => {
     isDropdownVisible: false,
     isHambugerMenuVisible: false,
     countryName: 'English (US)',
-    flag: 'UsaFlag',
+    flag: 'usa-flag',
     code: 'en'
   })
 
