@@ -10,5 +10,4 @@
 import { useRoute } from 'vue-router'
 
 const { params } = useRoute()
-console.log(params.id)
 </script>
