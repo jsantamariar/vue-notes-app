@@ -1,5 +1,4 @@
 import { LanguageCode, LanguageName, LanguageFlag } from '@/types'
-import SvgIcon from '@/components/Layout/SvgIcon.vue'
 
 const getLanguage = (locale: LanguageCode) => {
   switch (locale) {
@@ -8,7 +7,6 @@ const getLanguage = (locale: LanguageCode) => {
         name: LanguageName.English,
         code: LanguageCode.English,
         icon: {
-          component: SvgIcon,
           props: { name: LanguageFlag.English, width: '15px', height: '15px' }
         }
       }
@@ -17,7 +15,6 @@ const getLanguage = (locale: LanguageCode) => {
         name: LanguageName.Spanish,
         code: LanguageCode.Spanish,
         icon: {
-          component: SvgIcon,
           props: { name: LanguageFlag.Spanish, width: '15px', height: '15px' }
         }
       }
@@ -26,7 +23,6 @@ const getLanguage = (locale: LanguageCode) => {
         name: LanguageName.German,
         code: LanguageCode.German,
         icon: {
-          component: SvgIcon,
           props: { name: LanguageFlag.German, width: '15px', height: '15px' }
         }
       }
@@ -35,7 +31,6 @@ const getLanguage = (locale: LanguageCode) => {
         name: LanguageName.Italian,
         code: LanguageCode.Italian,
         icon: {
-          component: SvgIcon,
           props: { name: LanguageFlag.Italian, width: '15px', height: '15px' }
         }
       }
@@ -44,7 +39,6 @@ const getLanguage = (locale: LanguageCode) => {
         name: LanguageName.English,
         code: LanguageCode.English,
         icon: {
-          component: SvgIcon,
           props: { name: LanguageFlag.English, width: '15px', height: '15px' }
         }
       }

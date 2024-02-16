@@ -13,10 +13,10 @@ enum LanguageCode {
 }
 
 enum LanguageFlag {
-  English = 'UsaFlag',
-  Spanish = 'SpainFlag',
-  German = 'GermanyFlag',
-  Italian = 'ItalyFlag'
+  English = 'usa-flag',
+  Spanish = 'spain-flag',
+  German = 'germany-flag',
+  Italian = 'italy-flag'
 }
 
 export { LanguageCode, LanguageFlag, LanguageName }

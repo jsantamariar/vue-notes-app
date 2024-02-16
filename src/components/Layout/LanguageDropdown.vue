@@ -5,29 +5,25 @@
     @click="emit('toggleDropdown')"
     class="inline-flex mt-0 items-center gap-2 font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
   >
-    <SvgIcon
+    <img
       v-if="flag === LanguageFlag.English"
-      :name="LanguageFlag.English"
-      width="15px"
-      height="15px"
+      src="/src/assets/icons/usa-flag.svg"
+      class="h-4 rounded-full w-4"
     />
-    <SvgIcon
-      v-if="flag === LanguageFlag.German"
-      :name="LanguageFlag.German"
-      width="15px"
-      height="15px"
-    />
-    <SvgIcon
+    <img
       v-if="flag === LanguageFlag.Italian"
-      :name="LanguageFlag.Italian"
-      width="15px"
-      height="15px"
+      src="/src/assets/icons/italy-flag.svg"
+      class="h-4 rounded-full w-4"
     />
-    <SvgIcon
+    <img
+      v-if="flag === LanguageFlag.German"
+      src="/src/assets/icons/germany-flag.svg"
+      class="h-4 rounded-full w-4"
+    />
+    <img
       v-if="flag === LanguageFlag.Spanish"
-      :name="LanguageFlag.Spanish"
-      width="15px"
-      height="15px"
+      src="/src/assets/icons/spain-flag.svg"
+      class="h-4 rounded-full w-4"
     />
     {{ countryName }}
   </button>
@@ -45,7 +41,7 @@
             role="menuitem"
           >
             <div class="flex justify-center gap-2 m-0 p-0 items-center">
-              <SvgIcon :name="icon" width="15px" height="15px" />
+              <img :src="`/src/assets/icons/${icon}.svg`" class="h-4 rounded-full w-4" />
               <span class="dark:text-white text-stone-700"> {{ name }} </span>
             </div>
           </a>
@@ -57,7 +53,6 @@
 
 <script setup lang="ts">
 import { setI18nLanguage } from '@/locale/i18n'
-import SvgIcon from '@/components/Layout/SvgIcon.vue'
 import { LANGUAGES_SUPPORTED } from '@/constants/main'
 import { LanguageFlag } from '@/types'
 
